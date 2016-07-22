@@ -8,12 +8,14 @@ set :public_folder, File.dirname(__FILE__) + '/public'
 
 get '/' do
 	data = client.me.data
-	# p data
-	p client
+	p client.get_boards.data
+	client_boards = client.get_boards.data
+	p data
+	# p client
 	p '=============='
 	p data.first_name
 	p '=============='
-	erb :index, :locals => {:data => data}
+	erb :index, :locals => {:data => data, :client_boards => client_boards}
 end
 
 get '/poke' do

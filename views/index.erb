@@ -1,6 +1,11 @@
-Sup
-Homepage</br>
+Sup</br>
 
-Welcome <%= data.first_name %> <%= data.last_name %>
+Welcome</br> 
+<%= data.first_name %> <%= data.last_name %>
+<h3>Here are your liked things</h3>
+<% client_boards.each do |board| %>
+	<a href= <%= board.url %>> Check it </a>
+<% end %></br>
+
 
 <a href="/poke">Click here to do something</a>
