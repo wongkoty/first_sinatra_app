@@ -1,7 +1,13 @@
 require 'sinatra'
 
+set :public_folder, File.dirname(__FILE__) + '/public'
+
 get '/' do
-	erb :index, :layout => :layout
+	erb :index
+end
+
+get '/poke' do
+	erb :show
 end
 
 get '/hello/:name' do
