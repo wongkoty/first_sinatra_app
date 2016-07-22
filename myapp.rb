@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'pinterest-api'
+require 'httparty'
 
 client = Pinterest::Client.new(ENV['PINTEREST_TEST'])
 
@@ -7,15 +8,23 @@ client = Pinterest::Client.new(ENV['PINTEREST_TEST'])
 set :public_folder, File.dirname(__FILE__) + '/public'
 
 get '/' do
+	url = "https://api.pinterest.com/v1/me/pins/?access_token=" + ENV['PINTEREST_TEST']
+	puts url
+	response = HTTParty.get(url)
+	p response.parsed_response
+
+
+
 	data = client.me.data
-	p client.get_boards.data
+	# p client.get_pins
 	client_boards = client.get_boards.data
-	p data
+	client_pins = client.get_pins.data
+	# p data
 	# p client
 	p '=============='
-	p data.first_name
+	# p data.first_name
 	p '=============='
-	erb :index, :locals => {:data => data, :client_boards => client_boards}
+	erb :index, :locals => {:data => data, :client_boards => client_boards, :client_pins => client_pins}
 end
 
 get '/poke' do
