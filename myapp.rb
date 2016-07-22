@@ -1,9 +1,19 @@
 require 'sinatra'
+require 'pinterest-api'
+
+client = Pinterest::Client.new('AailoNTcnbbK05GuPgb7LAmUcJE3FGOqIuEpA7RDRAEMIIArqAAAAAA')
+
 
 set :public_folder, File.dirname(__FILE__) + '/public'
 
 get '/' do
-	erb :index
+	data = client.me.data
+	# p data
+	p client
+	p '=============='
+	p data.first_name
+	p '=============='
+	erb :index, :locals => {:data => data}
 end
 
 get '/poke' do
