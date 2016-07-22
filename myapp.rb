@@ -1,9 +1,9 @@
 require 'sinatra'
 require 'pinterest-api'
 
-client = Pinterest::Client.new('AailoNTcnbbK05GuPgb7LAmUcJE3FGOqIuEpA7RDRAEMIIArqAAAAAA')
+client = Pinterest::Client.new(ENV['PINTEREST_TEST'])
 
-
+# sets public folder to public dir
 set :public_folder, File.dirname(__FILE__) + '/public'
 
 get '/' do
