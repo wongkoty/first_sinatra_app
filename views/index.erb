@@ -2,11 +2,14 @@ Sup</br>
 
 Welcome</br> 
 <%= data.first_name %> <%= data.last_name %>
-<h3>Here are your liked things</h3>
+<h3>Here are your Boards</h3>
 <% client_boards.each do |board| %>
 	<a href= <%= board.url %>> Check it </a>
 <% end %></br>
 
-<%= client_pins[0].url %>
+<h3>Here are your Pins</h3>
+<% client_pins.each do |pin| %>
+	<a href= <%= pin.url %>> Check it </a>
+<% end %></br>
 
 <a href="/poke">Click here to do something</a>
