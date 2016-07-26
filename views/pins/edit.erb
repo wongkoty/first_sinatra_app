@@ -1,0 +1,6 @@
+<form action=/pin/<%= data["id"] %> method="post">
+	<label for="note">Note</label>
+	<input type="text" name="note" value=<%= data["note"]%>>
+  <input type="hidden" name="_method" value="patch"></br>
+  <input type="submit" value="Edit">
+</form>

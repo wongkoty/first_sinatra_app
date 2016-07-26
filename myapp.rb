@@ -75,6 +75,31 @@ get '/pin/:id' do
 	erb :"pins/show", :locals => {:data => test_data}
 end
 
+get '/pin/:id/edit' do
+	puts "edit pin route"
+	# puts params[:id]
+	url = "https://api.pinterest.com/v1/pins/" + params[:id] + "/?access_token=" + ENV['PINTEREST_TEST'] + "&scope=write_public"
+	puts url
+	response = HTTParty.get(url)
+	test_data = response.parsed_response["data"]
+	pp test_data
+
+	erb :"pins/edit", :locals => {:data => test_data}
+
+end
+
+patch '/pin/:id' do 
+	puts "patch pin route"
+	puts params["note"]
+	url = "https://api.pinterest.com/v1/pins/" + params[:id] +  "/?access_token=" + ENV['PINTEREST_TEST'] + "&note=" + params["note"]
+	puts url
+	response = HTTParty.patch(url)
+	# test_data = response.parsed_response["data"]
+
+	redirect to ("pin/" + params[:id])
+
+end
+
 delete '/pin/:id' do
 	puts "deleting this pin"
 	puts params[:id]
