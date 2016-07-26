@@ -1,4 +1,8 @@
 Note: <%= data["note"] %></br>
 The URL is: <a href=<%= data["url"] %>>Here</a></br>
+<form action=/pin/<%= data["id"]%> method="post">
+  <input type="hidden" name="_method" value="delete">
+  <input type="submit" value="Delete Pin?">
+</form>
 
-<a href="/">Go back</a>
+<a href="/pins">Go back</a>

@@ -75,16 +75,29 @@ get '/pin/:id' do
 	erb :"pins/show", :locals => {:data => test_data}
 end
 
+delete '/pin/:id' do
+	puts "deleting this pin"
+	puts params[:id]
+
+	url = "https://api.pinterest.com/v1/pins/" + params[:id] + "/?access_token=" + ENV['PINTEREST_TEST']
+	puts url
+	response = HTTParty.delete(url)
+	# test_data = response.parsed_response["data"]
+
+	redirect to ("pins")
+
+end
+
 
 # get '/poke' do
 # 	erb :show
 # end
 
-get '/hello/:name' do
-  # matches "GET /hello/foo" and "GET /hello/bar"
-  # params['name'] is 'foo' or 'bar'
-  "Hello #{params['name']}!"
-end
+# get '/hello/:name' do
+#   # matches "GET /hello/foo" and "GET /hello/bar"
+#   # params['name'] is 'foo' or 'bar'
+#   "Hello #{params['name']}!"
+# end
 
 set(:probability) { |value| condition { rand <= value } }
 
