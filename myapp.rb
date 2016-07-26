@@ -2,6 +2,7 @@ require 'sinatra'
 require 'pinterest-api'
 require 'httparty'
 require 'pp'
+require 'slim'
 
 client = Pinterest::Client.new(ENV['PINTEREST_TEST'])
 
@@ -36,7 +37,7 @@ get '/' do
 	p '=============='
 	# p data.first_name
 	p '=============='
-	erb :index, :locals => {:data => data, :client_boards => client_boards, :client_pins => client_pins}
+	slim :index, :locals => {:data => data, :client_boards => client_boards, :client_pins => client_pins}
 end
 
 get '/board/:id' do
