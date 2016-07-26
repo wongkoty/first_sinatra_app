@@ -18,7 +18,7 @@ get '/' do
 
 	p "=================="
 
-	pp client.get_boards.class
+	# pp client.get_boards.class
 	# pp client.get_boards.keys
 	# p test_data.data[0]
 
@@ -32,16 +32,33 @@ get '/' do
 	client_boards = client.get_boards.data
 	client_pins = client.get_pins.data
 	# p data
-	# p client_boards
+	pp client_boards
 	p '=============='
 	# p data.first_name
 	p '=============='
 	erb :index, :locals => {:data => data, :client_boards => client_boards, :client_pins => client_pins}
 end
 
-get '/poke' do
-	erb :show
+get '/board/:id' do
+	puts "show route"
+	# puts params[:id]
+	url = "https://api.pinterest.com/v1/boards/" + params[:id] + "/?access_token=" + ENV['PINTEREST_TEST']
+	puts url
+	response = HTTParty.get(url)
+	test_data = response.parsed_response["data"]
+
+	pp test_data
+
+
+
+	erb :show, :locals => {:data => test_data}
+	
 end
+
+
+# get '/poke' do
+# 	erb :show
+# end
 
 get '/hello/:name' do
   # matches "GET /hello/foo" and "GET /hello/bar"

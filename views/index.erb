@@ -5,6 +5,7 @@ Welcome</br>
 <h3>Here are your Boards</h3>
 <% client_boards.each do |board| %>
 	<a href= <%= board.url %>> Check it </a></br>
+	<a href=/board/<%= board.id%>> Click this for the show route </a>
 	This is the ID: <%= board.id %></br>
 <% end %></br>
 
