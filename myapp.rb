@@ -49,10 +49,17 @@ get '/board/:id' do
 
 	pp test_data
 
-
-
 	erb :show, :locals => {:data => test_data}
 	
+end
+
+get '/pins' do
+	puts "pins index"
+	client_pins = client.get_pins.data
+	pp client_pins
+
+	erb :"pins/index", :locals => {:client_pins => client_pins}
+
 end
 
 
