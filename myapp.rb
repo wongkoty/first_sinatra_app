@@ -62,6 +62,19 @@ get '/pins' do
 
 end
 
+get '/pin/:id' do
+	puts "show pin route"
+	# puts params[:id]
+	url = "https://api.pinterest.com/v1/pins/" + params[:id] + "/?access_token=" + ENV['PINTEREST_TEST']
+	puts url
+	response = HTTParty.get(url)
+	test_data = response.parsed_response["data"]
+
+	pp test_data
+
+	erb :"pins/show", :locals => {:data => test_data}
+end
+
 
 # get '/poke' do
 # 	erb :show
