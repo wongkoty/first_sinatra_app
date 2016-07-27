@@ -50,7 +50,7 @@ get '/board/:id' do
 
 	pp test_data
 
-	erb :show, :locals => {:data => test_data}
+	slim :show, :locals => {:data => test_data}
 	
 end
 
