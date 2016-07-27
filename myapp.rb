@@ -3,6 +3,57 @@ require 'pinterest-api'
 require 'httparty'
 require 'pp'
 require 'slim'
+require 'omniauth-pinterest'
+
+puts ENV['PINTEREST_APP_ID']
+puts ENV['PINTEREST_SECRET']
+
+enable :sessions
+
+use OmniAuth::Builder do
+	provider :pinterest, ENV['PINTEREST_APP_ID'], ENV['PINTEREST_SECRET']
+end
+
+helpers do
+  def admin?
+    session[:admin]
+  end
+end
+
+get '/public' do
+  "This is the public page - everybody is welcome!"
+end
+
+get '/private' do
+  halt(401,'Not Authorized') unless admin?
+  "This is the private page - members only"
+end
+
+get '/login' do
+	redirect to("/auth/pinterest")
+end
+
+get '/logout' do
+  session[:admin] = nil
+  session[:id] = nil
+  "You are now logged out"
+end
+
+get '/auth/pinterest/callback' do
+ 	session[:admin] = true
+  session[:id] = env['omniauth.auth']['info']['id']
+  # pp session
+  client = Pinterest::Client.new(session[:id])
+  pp env['omniauth.auth']
+  pp client
+  "<h1>Hi #{session[:username]}!</h1>"
+
+  redirect to("/")
+end
+
+get '/auth/failure' do
+  params[:message]
+end
 
 client = Pinterest::Client.new(ENV['PINTEREST_TEST'])
 
@@ -15,7 +66,11 @@ get '/' do
 	response = HTTParty.get(url)
 	test_data = response.parsed_response
 
-	pp test_data["data"][0]["url"]
+	pp session
+	pp session[:username]
+	p request.env['omniauth.auth']
+
+	# pp test_data["data"][0]["url"]
 
 	p "=================="
 
