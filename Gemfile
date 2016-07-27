@@ -1,0 +1,7 @@
+source 'https://rubygems.org'
+gem 'sinatra'
+gem 'pinterest-api'
+gem 'httparty'
+gem 'slim'
+gem 'omniauth-pinterest'
+gem 'rerun'
